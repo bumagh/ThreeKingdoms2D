@@ -5,6 +5,7 @@ import { NetAPITools } from '../Common/NetAPITools';
 import { Debug } from '../../../Libraries/Util/Debug';
 import { Architecture } from '../Architecture';
 import { NetHttpLogin, NetHttpRegister } from '../Common/NetAPITypes';
+import { DlgEnums } from '../Common/Dlgs/DlgEnums';
 const { ccclass, property } = _decorator;
 export enum MenuBtns
 {
@@ -79,6 +80,7 @@ export class MenuUIController extends Component
     {
         if (res.code == 200)
         {
+            EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "注册成功");
             // this.MenuChange("zone");
         }
     }
