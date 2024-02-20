@@ -2,9 +2,9 @@ import { _decorator, CCBoolean, Component, EditBox, EventTouch, Label, Node, Pro
 import { EventManager } from '../../../Libraries/Util/EventManager';
 import { TouchEventProxy } from '../Common/TouchEventProxy';
 import { NetAPITools } from '../Common/NetAPITools';
-import { NetHttpLoginResp } from '../Common/NetAPITypes';
 import { Debug } from '../../../Libraries/Util/Debug';
 import { Architecture } from '../Architecture';
+import { NetHttpLogin, NetHttpRegister } from '../Common/NetAPITypes';
 const { ccclass, property } = _decorator;
 export enum MenuBtns
 {
@@ -35,11 +35,13 @@ export class MenuUIController extends Component
     {
         EventManager.On("MenuBtnTouched", this.MenuBtnTouched, this);
         EventManager.On("OnMenuLogined", this.OnMenuLogined, this);
+        EventManager.On("OnMenuRegistered", this.OnMenuRegistered, this);
     }
     protected onDestroy(): void
     {
         EventManager.Off("MenuBtnTouched", this.MenuBtnTouched, this);
         EventManager.Off("OnMenuLogined", this.OnMenuLogined, this);
+        EventManager.Off("OnMenuRegistered", this.OnMenuRegistered, this);
 
     }
     private MenuChange(name: string)
@@ -66,11 +68,18 @@ export class MenuUIController extends Component
                 break;
         }
     }
-    private OnMenuLogined(res: NetHttpLoginResp)
+    private OnMenuLogined(res: NetHttpLogin.NetHttpLoginResp)
     {
         if (res.code == 200)
         {
             this.MenuChange("zone");
+        }
+    }
+    private OnMenuRegistered(res: NetHttpRegister.NetHttpRegisterResp)
+    {
+        if (res.code == 200)
+        {
+            // this.MenuChange("zone");
         }
     }
     private MenuBtnTouched(proxy: TouchEventProxy, event: EventTouch)
@@ -81,7 +90,7 @@ export class MenuUIController extends Component
                 NetAPITools.NetLogin(this.accountEb.string, this.pwdEb.string, "OnMenuLogined");
                 break;
             case MenuBtns.Register:
-
+                NetAPITools.NetRegister(this.accountEb.string, this.pwdEb.string, "OnMenuRegistered");
                 break;
             case MenuBtns.ZoneTouched:
                 this.MenuChange("player");
