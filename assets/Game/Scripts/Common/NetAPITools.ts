@@ -1,5 +1,5 @@
 import { EventManager } from "../../../Libraries/Util/EventManager";
-import { ApiEnums } from "./NetAPITypes";
+import { ApiEnums, NetHttpLoginResp } from "./NetAPITypes";
 
 export class NetAPITools
 {
@@ -8,7 +8,7 @@ export class NetAPITools
 
         EventManager.Emit("RequestAPI", ApiEnums.UserMgr, { action: 'loginUser', account: account, pwd: pwd }, (res: any) =>
         {
-            callBackEventName != null && EventManager.Emit(callBackEventName, res);
+            callBackEventName != null && EventManager.Emit(callBackEventName, res as NetHttpLoginResp);
         });
 
     }

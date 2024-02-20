@@ -72,7 +72,6 @@ export class Architecture extends Component implements INodeReferencesListener
 
     public BackToScene(sceneName: string)
     {
-        Debug.Log(sceneName);
         director.loadScene(sceneName, (error, scene) =>
         {
             if (error)

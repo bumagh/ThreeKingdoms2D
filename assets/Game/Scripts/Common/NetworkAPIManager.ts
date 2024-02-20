@@ -43,30 +43,46 @@ export class NetworkAPIManager
         }
         return guid;
     }
+
+    public static async HttpRequest(url: string, data: any = null, method: any = "POST"): Promise<any>
+    {
+        try
+        {
+            const urlEncodedData = Object.keys(data).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`).join('&');
+            var requestUrl = `${NetworkAPIManager.self.httpUrl}${url}`;
+            var requestObject: RequestInit = {
+                method: method,
+                mode: 'cors',
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                },
+                body: urlEncodedData
+            };
+
+            const response: Response = await fetch(requestUrl, requestObject)
+            // 检查响应状态码  
+            if (!response.ok)
+            {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const result = await response.json();
+            return result;
+        } catch (error)
+        {
+            Debug.Log(error);
+            return null;
+        }
+    }
     private RequestAPI(url: string, data: any = null, onSuccess: (response: any) => void = null, method: any = "POST"): void
     {
-        const urlEncodedData = Object.keys(data).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`).join('&');
-        var requestUrl = `${NetworkAPIManager.self.httpUrl}${url}`;
-        var requestObject: RequestInit = {
-            method: method,
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            },
-            body: urlEncodedData
-        };
-
-        fetch(requestUrl, requestObject).then((response) =>
-        {
-            Debug.Log(response.json(), NetworkAPIManager.self.debugTag);
-        }).then((data) =>
+        NetworkAPIManager.HttpRequest(url, data, method).then(data =>
         {
             Debug.Log(`${url} 请求成功`, NetworkAPIManager.self.debugTag);
             Debug.Log(data, NetworkAPIManager.self.debugTag);
-            // if (result.data["error"] != 0) return;
-            // if (onSuccess == null) return;
-            // onSuccess(result.data["result"]); 
-        }).catch((err) =>
+            // if (data["code"] != 200) return;
+            if (onSuccess == null) return;
+            onSuccess(data);
+        }).catch(err =>
         {
             Debug.Log(err);
         });
