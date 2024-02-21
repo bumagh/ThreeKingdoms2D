@@ -74,6 +74,8 @@ export class MenuUIController extends Component
         if (res.code == 200)
         {
             this.MenuChange("zone");
+        }else{
+            EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "账号或密码错误");
         }
     }
     private OnMenuRegistered(res: NetHttpRegister.NetHttpRegisterResp)
@@ -82,6 +84,8 @@ export class MenuUIController extends Component
         {
             EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "注册成功");
             // this.MenuChange("zone");
+        }else{
+            EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "账号已存在");
         }
     }
     private MenuBtnTouched(proxy: TouchEventProxy, event: EventTouch)

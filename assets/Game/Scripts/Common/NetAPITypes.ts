@@ -1,4 +1,4 @@
-export const UrlBase = "https://mini/";
+export const UrlBase = "https://vmdev/";
 export class ApiEnums
 {
     static UserMgr = 'hxsg/api/user_mgr';
