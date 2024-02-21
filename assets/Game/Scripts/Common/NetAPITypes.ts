@@ -1,8 +1,8 @@
-export const UrlBase = "https://vmdev/";
+export const UrlBase = "https://mini/";
 export class ApiEnums
 {
-    static UserMgr = 'hxsg/api/user_mgr';
-    static MsgMgr = 'hxsg/api/msg_mgr';
+    static UserMgr = 'hxsg/login';
+    static MsgMgr = 'hxsg/msg_mgr';
 }
 interface BaseResp
 {
