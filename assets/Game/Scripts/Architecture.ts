@@ -4,6 +4,7 @@ import { EventManager } from '../../Libraries/Util/EventManager';
 import { PipelineScheduleFunction } from '../../Libraries/Util/PipelineContext';
 import { INodeReferencesListener, NodeReferences } from './Common/NodeReferences';
 import { NetworkAPIManager } from './Common/NetworkAPIManager';
+import { GameWebSocketManager } from './Common/GameWebSocketManager';
 const { ccclass, property, executionOrder } = _decorator;
 
 @ccclass('Architecture')
@@ -29,7 +30,7 @@ export class Architecture extends Component implements INodeReferencesListener
         Debug.SetIgnores(this.consoleIgnores);
 
         this.InitEventManager();
-        // this.InitWebSocketManager();
+        this.InitWebSocketManager();
         this.InitNetworkAPIManager();
         this.InitPipelines();
 
@@ -45,6 +46,7 @@ export class Architecture extends Component implements INodeReferencesListener
     }
     protected start(): void
     {
+        EventManager.Emit("InitWebSocket")
 
     }
 
@@ -55,8 +57,8 @@ export class Architecture extends Component implements INodeReferencesListener
 
     private InitWebSocketManager(): void
     {
-        // var webSocketManager = new GameWebSocketManager();
-        // webSocketManager.OnEnable();
+        var webSocketManager = new GameWebSocketManager();
+        webSocketManager.OnEnable();
     }
 
     private InitNetworkAPIManager(): void

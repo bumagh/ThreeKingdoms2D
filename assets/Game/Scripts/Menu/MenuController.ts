@@ -14,14 +14,15 @@ export class MenuController extends Component
 
     }
 
-    protected start(): void
-    {
-
-    }
     protected onDestroy(): void
     {
 
     }
 
+    protected start(): void
+    {
+
+    }
+    
 
 }

@@ -1,4 +1,4 @@
-import { _decorator, CCBoolean, Component, EditBox, EventTouch, Label, Node, ProgressBar, Sprite, tween, TweenAction } from 'cc';
+import { _decorator, CCBoolean, Component, EditBox, EventTouch, Label, Node, ProgressBar, Sprite, sys, tween, TweenAction } from 'cc';
 import { EventManager } from '../../../Libraries/Util/EventManager';
 import { TouchEventProxy } from '../Common/TouchEventProxy';
 import { NetAPITools } from '../Common/NetAPITools';
@@ -29,7 +29,13 @@ export class MenuUIController extends Component
     private playerNode: Node;
     protected start(): void
     {
-
+        var loginInfoStr = sys.localStorage.getItem("loginInfo");
+        if (loginInfoStr != null)
+        {
+            var loginInfo: { account: string, pwd: string } = JSON.parse(loginInfoStr);
+            this.accountEb.string = loginInfo.account;
+            this.pwdEb.string = loginInfo.pwd;
+        }
     }
 
     protected onLoad(): void
@@ -74,7 +80,9 @@ export class MenuUIController extends Component
         if (res.code == 200)
         {
             this.MenuChange("zone");
-        }else{
+            sys.localStorage.setItem("loginInfo", JSON.stringify({ account: this.accountEb.string, pwd: this.pwdEb.string }));
+        } else
+        {
             EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "账号或密码错误");
         }
     }
@@ -83,8 +91,11 @@ export class MenuUIController extends Component
         if (res.code == 200)
         {
             EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "注册成功");
+            //保存信息
+            sys.localStorage.setItem("loginInfo", JSON.stringify({ account: this.accountEb.string, pwd: this.pwdEb.string }));
             // this.MenuChange("zone");
-        }else{
+        } else
+        {
             EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "账号已存在");
         }
     }

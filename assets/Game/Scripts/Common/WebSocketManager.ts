@@ -6,7 +6,7 @@ import { Validator } from "../../../Libraries/Util/Validator";
 
 export abstract class WebSocketManager implements IEntity
 {
-    private wssUrl: string = "wss://gameapi.wujinongpi.cn/wss";
+    private wssUrl: string = "ws://vmdev:8812/ws";
     private ws: WebSocket = null;
     private debugTag = "WebSocketManager";
 
@@ -38,10 +38,10 @@ export abstract class WebSocketManager implements IEntity
         };
         ws.onmessage = (event: MessageEvent) =>
         {
-            var dataObj = JSON.parse(event.data);
-            Debug.Log("WebSocket响应消息", this.debugTag);
-            Debug.Log(dataObj, this.debugTag);
-            this.OnWebSocketMessage(dataObj);
+            // var dataObj = JSON.parse(event.data);
+            // Debug.Log("WebSocket响应消息", this.debugTag);
+            // Debug.Log(dataObj, this.debugTag);
+            // this.OnWebSocketMessage(dataObj);
         };
         ws.onclose = (event: CloseEvent) =>
         {
