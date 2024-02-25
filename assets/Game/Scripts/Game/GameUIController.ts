@@ -11,11 +11,18 @@ export enum GameBtns
 @ccclass('GameUIController')
 export class GameUIController extends Component
 {
+    @property(Label)
+    private playerLabel: Label;
+
     protected start(): void
     {
 
     }
 
+    public InitPlayer(id: string)
+    {
+        this.playerLabel.string = id;
+    }
     protected onLoad(): void
     {
         EventManager.On("GameBtnTouched", this.GameBtnTouched, this);

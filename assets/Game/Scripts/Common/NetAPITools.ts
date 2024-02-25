@@ -1,3 +1,4 @@
+import { sys } from "cc";
 import { EventManager } from "../../../Libraries/Util/EventManager";
 import { ApiEnums, NetHttpLogin, NetHttpRegister } from "./NetAPITypes";
 export class NetAPITools
@@ -19,6 +20,11 @@ export class NetAPITools
             callBackEventName != null && EventManager.Emit(callBackEventName, res as NetHttpRegister.NetHttpRegisterResp);
         });
 
+    }
+
+    public static NetWsEnterGame()
+    {
+        EventManager.Emit("SendMsg", JSON.stringify({ type: "EnterGame", id: sys.localStorage.getItem("ClientPlayerId") }));
     }
 
 

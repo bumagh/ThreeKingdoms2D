@@ -1,4 +1,4 @@
-import { IEntity } from "../../../Framework/Common/IEntity";
+import { IEntity } from "../../../Framework/IEntity";
 import { Debug } from "../../../Libraries/Util/Debug";
 import { EventManager } from "../../../Libraries/Util/EventManager";
 import { Validator } from "../../../Libraries/Util/Validator";
@@ -6,7 +6,7 @@ import { Validator } from "../../../Libraries/Util/Validator";
 
 export abstract class WebSocketManager implements IEntity
 {
-    private wssUrl: string = "ws://mini:8812/ws-write";
+    private wssUrl: string = "ws://mini:8812/wsapi";
     private ws: WebSocket = null;
     private debugTag = "WebSocketManager";
 
@@ -39,8 +39,8 @@ export abstract class WebSocketManager implements IEntity
         ws.onmessage = (event: MessageEvent) =>
         {
             // var dataObj = JSON.parse(event.data);
-            // Debug.Log("WebSocket响应消息", this.debugTag);
-            // Debug.Log(dataObj, this.debugTag);
+            Debug.Log("WebSocket响应消息", this.debugTag);
+            Debug.Log(event.data, this.debugTag);
             // this.OnWebSocketMessage(dataObj);
         };
         ws.onclose = (event: CloseEvent) =>

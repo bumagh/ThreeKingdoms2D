@@ -4,7 +4,7 @@ import { TouchEventProxy } from '../Common/TouchEventProxy';
 import { NetAPITools } from '../Common/NetAPITools';
 import { Debug } from '../../../Libraries/Util/Debug';
 import { Architecture } from '../Architecture';
-import { NetHttpLogin, NetHttpRegister } from '../Common/NetAPITypes';
+import { LoginDataResp, NetHttpLogin, NetHttpRegister } from '../Common/NetAPITypes';
 import { DlgEnums } from '../Common/Dlgs/DlgEnums';
 const { ccclass, property } = _decorator;
 export enum MenuBtns
@@ -81,6 +81,10 @@ export class MenuUIController extends Component
         {
             this.MenuChange("zone");
             sys.localStorage.setItem("loginInfo", JSON.stringify({ account: this.accountEb.string, pwd: this.pwdEb.string }));
+            var data: LoginDataResp = res.data as unknown as LoginDataResp;
+            sys.localStorage.setItem("Player", JSON.stringify(data));
+            sys.localStorage.setItem("ClientPlayerId", data.id);
+
         } else
         {
             EventManager.Emit(DlgEnums.ShowSimpleTipDlg, "账号或密码错误");
@@ -113,6 +117,8 @@ export class MenuUIController extends Component
                 this.MenuChange("player");
                 break;
             case MenuBtns.PlayerTouched:
+                //开始发socket消息
+                NetAPITools.NetWsEnterGame();
                 Architecture.instance.BackToScene("Game");
                 break;
             default:

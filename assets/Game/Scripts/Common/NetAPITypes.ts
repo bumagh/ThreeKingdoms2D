@@ -28,3 +28,7 @@ export declare namespace NetHttpRegister
     type NetHttpRegisterResp = BaseResp;
     type NetHttpRegisterQuery = BaseQuery;
 }
+export interface LoginDataResp
+{
+    id: string
+}

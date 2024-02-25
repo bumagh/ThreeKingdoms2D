@@ -63,7 +63,8 @@ export class NetworkAPIManager
             // 检查响应状态码  
             if (!response.ok)
             {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                Debug.Error(`HTTP error! Status: ${response.status}`);
+                // throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const result = await response.json();
             return result;
@@ -79,7 +80,8 @@ export class NetworkAPIManager
         {
             Debug.Log(`${url} 请求成功`, NetworkAPIManager.self.debugTag);
             Debug.Log(data, NetworkAPIManager.self.debugTag);
-            // if (data["code"] != 200) return;
+            if (data == null) return;
+            if (data["code"] != 200) return;
             if (onSuccess == null) return;
             onSuccess(data);
         }).catch(err =>
