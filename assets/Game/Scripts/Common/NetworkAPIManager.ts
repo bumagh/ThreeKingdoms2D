@@ -81,7 +81,6 @@ export class NetworkAPIManager
             Debug.Log(`${url} 请求成功`, NetworkAPIManager.self.debugTag);
             Debug.Log(data, NetworkAPIManager.self.debugTag);
             if (data == null) return;
-            if (data["code"] != 200) return;
             if (onSuccess == null) return;
             onSuccess(data);
         }).catch(err =>

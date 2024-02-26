@@ -6,7 +6,7 @@ import { Validator } from "../../../Libraries/Util/Validator";
 
 export abstract class WebSocketManager implements IEntity
 {
-    private wssUrl: string = "ws://mini:8812/wsapi";
+    private wssUrl: string = "ws://vmdev:8812/wsapi";
     private ws: WebSocket = null;
     private debugTag = "WebSocketManager";
 

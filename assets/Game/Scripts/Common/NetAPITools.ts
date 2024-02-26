@@ -1,6 +1,7 @@
 import { sys } from "cc";
 import { EventManager } from "../../../Libraries/Util/EventManager";
 import { ApiEnums, NetHttpLogin, NetHttpRegister } from "./NetAPITypes";
+import { Debug } from "../../../Libraries/Util/Debug";
 export class NetAPITools
 {
     public static NetLogin(account: string, pwd: string, callBackEventName: string = null)

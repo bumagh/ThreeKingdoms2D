@@ -1,6 +1,7 @@
 import { _decorator, Color, EventTouch, Label, Node } from 'cc';
 import { EventManager } from '../../../../Libraries/Util/EventManager';
 import { AbstractCenterDlg } from './AbstractCenterDlg';
+import { Debug } from '../../../../Libraries/Util/Debug';
 
 const { ccclass, property } = _decorator;
 
