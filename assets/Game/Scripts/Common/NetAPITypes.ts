@@ -1,8 +1,12 @@
-export const UrlBase = "https://vmdev/";
+export const UrlBase = "http://vmdev:8812/";
 export class ApiEnums
 {
-    static UserMgr = 'hxsg/login';
+    static HttpLogin = 'login';
     static MsgMgr = 'hxsg/msg_mgr';
+    static WsEnter = "enter";
+    static WsEnterGame = "enterGame";
+    static WsLeave = "leave"
+    static WsNotice = "notice"
 }
 interface BaseResp
 {

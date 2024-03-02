@@ -1,6 +1,7 @@
 import { Debug } from "../../../Libraries/Util/Debug";
 import { EventManager } from "../../../Libraries/Util/EventManager";
 import { Validator } from "../../../Libraries/Util/Validator";
+import { ApiEnums } from "./NetAPITypes";
 import { WebSocketManager } from "./WebSocketManager";
 
 
@@ -20,24 +21,38 @@ export class GameWebSocketManager extends WebSocketManager
 
     private InitMessageCallbacks()
     {
-        // this.callbacks.set(WsApiEnum.WsRegister, this.OnRegister);
+        this.callbacks.set(ApiEnums.WsEnter, this.OnWsEnter);
+        this.callbacks.set(ApiEnums.WsNotice, this.OnWsNotice);
+        this.callbacks.set(ApiEnums.WsEnterGame, this.OnWsEnterGame);
 
     }
 
     protected OnWebSocketMessage(dataObj: any): void
     {
-        Debug.Log(dataObj, `${this.gameDebugTag}_${dataObj.method}`);
-        if (this.callbacks.has(dataObj.method))
-            this.callbacks.get(dataObj.method).call(this, dataObj);
+        Debug.Log(dataObj, `${this.gameDebugTag}_${dataObj.type}`);
+        if (this.callbacks.has(dataObj.type))
+            this.callbacks.get(dataObj.type).call(this, dataObj);
         else
             Debug.Log(`GameWebSocketManager未找到${dataObj.type}的回调`, this.gameDebugTag);
     }
-    private OnRegister(dataObj: any): void
+    private OnWsEnter(dataObj: any): void
     {
-        // if (Validator.IsObjectIllegal(dataObj, "dataObj")) return;
-        // var regData: RegRespData = dataObj.data as RegRespData;
-        // EventManager.Emit("OnRegister", regData);
-        // Debug.Log(`玩家注册`, this.gameDebugTag);
+        if (Validator.IsObjectIllegal(dataObj, "dataObj")) return;
+        EventManager.Emit("OnWsEnter", dataObj);
+        Debug.Log(`OnWsEnter`, this.gameDebugTag);
     }
 
+    private OnWsNotice(dataObj: any): void
+    {
+        if (Validator.IsObjectIllegal(dataObj, "dataObj")) return;
+        EventManager.Emit("OnWsNotice", dataObj);
+        Debug.Log(`OnWsNotice`, this.gameDebugTag);
+    }
+
+    private OnWsEnterGame(dataObj: any): void
+    {
+        if (Validator.IsObjectIllegal(dataObj, "dataObj")) return;
+        EventManager.Emit("OnWsEnterGame", dataObj);
+        Debug.Log(`OnWsEnterGame`, this.gameDebugTag);
+    }
 }
