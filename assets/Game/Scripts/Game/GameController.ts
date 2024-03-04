@@ -36,12 +36,35 @@ export class GameController extends Component
             //是本地玩家
         } else
         {
-            this.gameUIController.CreatePlayer(data['pid']);
+            var player = new Player();
+            player.id = data['pid'];
+            player.x = 0;
+            player.y = 0;
+            this.gameUIController.CreatePlayer(player);
+            Debug.Log("其他玩家")
         }
         Debug.Log(data, this.debugTag);
     }
-    private OnWsNotice(data: any)
+    private OnWsNotice(data: {
+        type: string,
+        pid: string,
+        data: {
+            x: number,
+            y: number
+        }
+    })
     {
+        var player = new Player();
+        player.id = data.pid;
+        player.x = data.data.x;
+        player.y = data.data.y;
+        if (data['pid'] == sys.localStorage.getItem("ClientPlayerId"))
+        {
+            //是本地玩家
+        } else
+        {
+            this.gameUIController.CreatePlayer(player);
+        }
         Debug.Log(data, this.debugTag);
     }
     private GraphicsTouched(proxy: TouchEventProxy, event: EventTouch)
@@ -64,7 +87,7 @@ export class GameController extends Component
         {
             this.gameUIController.playerNode.setPosition(playerPos.x, playerPos.y + 10);
         }
-        NetAPITools.NetWsNotice({ x: playerPos.x, y: playerPos.y })
+        NetAPITools.NetWsNotice({ x: this.gameUIController.playerNode.position.x, y: this.gameUIController.playerNode.position.y })
     }
     protected start(): void
     {
