@@ -276,7 +276,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GameTitle",
+    "_name": "MapTitle",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -337,7 +337,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 542.4609375,
+      "width": 240,
       "height": 201.6
     },
     "_anchorPoint": {
@@ -367,7 +367,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "Three Kindoms",
+    "_string": "新手村",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 80,
